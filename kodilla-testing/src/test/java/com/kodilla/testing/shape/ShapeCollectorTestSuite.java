@@ -1,9 +1,5 @@
 package com.kodilla.testing.shape;
-import com.kodilla.testing.shape.ShapeCollector;
-import com.kodilla.testing.shape.Circle;
-import com.kodilla.testing.shape.Shape;
-import com.kodilla.testing.shape.Square;
-import com.kodilla.testing.shape.Triangle;
+
 import org.junit.jupiter.api.*;
 
 
@@ -64,22 +60,23 @@ public class ShapeCollectorTestSuite {
         //Then
         Assertions.assertEquals(shape, receivedShape);
     }
-   // @DisplayName("Test for getting list of figures")
-   // @Test
-    //void testCaseGetShape() {
+    @DisplayName("Test for getting list of figures")
+    @Test
+    void testCase() {
         //Given
-      //  ShapeCollector shapeCollector = new ShapeCollector();
-      //  Shape shape1 = new Square(10);
-     //   Shape shape2 = new Circle(10);
-     //   Shape shape3 = new Triangle(10, 10);
+        ShapeCollector shapeCollector = new ShapeCollector();
+        Shape shape1 = new Square(10);
+        Shape shape2 = new Circle(10);
+        Shape shape3 = new Triangle(10, 10);
 
-       // shapeCollector.addFigure(shape1);
-      //  shapeCollector.addFigure(shape2);
-      //  shapeCollector.addFigure(shape3);
+        shapeCollector.addFigure(shape1);
+        shapeCollector.addFigure(shape2);
+        shapeCollector.addFigure(shape3);
 
         //When
-      //  shapeCollector.showFigures();
+        shapeCollector.showFigures();
+
         //Then
-       // Assertions.assertEquals(shape, receivedShape);
-    //}
+        Assertions.assertEquals(shapeCollector.showFigures(), "[Square{side=10.0}, Circle{radius=10.0}, Triangle{base=10.0, height=10.0}]");
+    }
 }

@@ -1,6 +1,7 @@
 package com.kodilla.testing.shape;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ShapeCollector {
@@ -17,8 +18,9 @@ public class ShapeCollector {
     public Shape getFigure(int n) {
         return shapes.get(n);
     }
-    public void showFigures() {
-        shapes.toArray();
+    public String showFigures() {
+        System.out.println(shapes.toArray());
 
+        return Arrays.toString(shapes.toArray());
     }
 }
