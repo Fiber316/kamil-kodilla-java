@@ -90,4 +90,36 @@ class BookDirectoryTestSuite {
         assertEquals(0, theListOfBooks10.size());                                     // [5]
         verify(libraryDatabaseMock, times(0)).listBooksWithCondition(anyString());    // [6]
     }
+
+    @Test
+    void testLibraryUserWithNoBooksBorrowed() {
+        // Given
+
+        // When
+
+        // Then
+
+    }
+
+    @Test
+    void testLibraryUserWithOneBookBorrowed() {
+        // Given
+
+
+        // When
+
+
+        // Then
+
+    }
+
+    @Test
+    void testLibraryUserWithFiveBooksBorrowed() {
+        // Given
+
+        // When
+
+        // Then
+
+    }
 }
