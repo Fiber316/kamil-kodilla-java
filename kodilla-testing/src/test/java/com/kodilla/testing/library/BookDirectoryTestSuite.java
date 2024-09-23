@@ -94,32 +94,61 @@ class BookDirectoryTestSuite {
     @Test
     void testLibraryUserWithNoBooksBorrowed() {
         // Given
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        LibraryUser user = new LibraryUser("Jan", "Kowal", "99010112345");
+
+        List<Book> noBooksBorrowed = new ArrayList<>();
+        when(libraryDatabaseMock.listBooksInHandsOf(user)).thenReturn(noBooksBorrowed);
 
         // When
+        List<Book> booksInHand = bookLibrary.listBooksInHandsOf(user);
 
         // Then
-
+        assertEquals(0, booksInHand.size());
     }
 
     @Test
     void testLibraryUserWithOneBookBorrowed() {
         // Given
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        LibraryUser user = new LibraryUser("Jan", "Kowal", "99010112345");
 
+        List<Book> oneBookBorrowed = new ArrayList<>();
+        Book book1 = new Book("Secrets of Alamo", "John Smith", 2008);                   // [5]
+        oneBookBorrowed.add(book1);
+        when(libraryDatabaseMock.listBooksInHandsOf(user)).thenReturn(oneBookBorrowed);
 
         // When
-
+        List<Book> booksInHand = bookLibrary.listBooksInHandsOf(user);
 
         // Then
-
+        assertEquals(1, booksInHand.size());
     }
 
     @Test
     void testLibraryUserWithFiveBooksBorrowed() {
         // Given
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        LibraryUser user = new LibraryUser("Jan", "Kowal", "99010112345");
+
+        List<Book> fiveBooksBorrowed = new ArrayList<>();
+        Book book1 = new Book("Secrets of Alamo", "John Smith", 2008);                   // [5]
+        Book book2 = new Book("Secretaries and Directors", "Dilbert Michigan", 2012);    // [6]
+        Book book3 = new Book("Secret life of programmers", "Steve Wolkowitz", 2016);    // [7]
+        Book book4 = new Book("Secrets of Java", "Ian Tenewitch", 2010);
+        Book book5 = new Book("Secrets of Java2", "Jan Tenewitch", 2011);
+        fiveBooksBorrowed.add(book1);
+        fiveBooksBorrowed.add(book2);
+        fiveBooksBorrowed.add(book3);
+        fiveBooksBorrowed.add(book4);
+        fiveBooksBorrowed.add(book5);
+
+        when(libraryDatabaseMock.listBooksInHandsOf(user)).thenReturn(fiveBooksBorrowed);
 
         // When
+        List<Book> booksInHand = bookLibrary.listBooksInHandsOf(user);
 
         // Then
-
+        assertEquals(5, booksInHand.size());
     }
 }
