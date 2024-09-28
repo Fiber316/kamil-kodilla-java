@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.OptionalDouble;
 
 import static java.util.stream.Collectors.toList;
 import static org.junit.jupiter.api.Assertions.*;
@@ -146,20 +147,15 @@ class BoardTestSuite {
         //When
         List<TaskList> inProgressTasks = new ArrayList<>();
         inProgressTasks.add(new TaskList("In progress"));
-        var numberOfTasks = project.getTaskLists().stream()
+        OptionalDouble averageTimeTask = project.getTaskLists().stream()
                 .filter(inProgressTasks::contains)
-                .flatMap(tl -> tl.getTasks().stream())
-                .count();
+                .flatMap(tasks -> tasks.getTasks().stream())
+                .mapToDouble(task -> task.getCreated().until(LocalDate.now()).getDays())
+                .average();
 
-//        var sumOfDays = project.getTaskLists().stream()
-//                .filter(inProgressTasks::contains)
-//                .flatMap(tl -> tl.getTasks().stream())
-//                .map(Task::getCreated)
-//                .reduce(0, (sum, current) -> sum = sum.add(current));
-//
-//        var averageTimeTask = sumOfDays / numberOfTasks;
-//
-//        //Then
-//        assertEquals(2, averageTimeTask);
+
+        //Then
+        OptionalDouble expectedTimeTask = OptionalDouble.of(10);
+        assertEquals(expectedTimeTask, averageTimeTask);
     }
 }
