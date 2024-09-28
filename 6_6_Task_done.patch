@@ -1,0 +1,246 @@
+Subject: [PATCH] 6.6 Task done
+---
+Index: kodilla-stream/src/main/java/com/kodilla/stream/forum/ForumUser.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/kodilla-stream/src/main/java/com/kodilla/stream/forum/ForumUser.java b/kodilla-stream/src/main/java/com/kodilla/stream/forum/ForumUser.java
+new file mode 100644
+--- /dev/null	(revision 9bcace0a54af9c4ad5a233646b79b7086d957126)
++++ b/kodilla-stream/src/main/java/com/kodilla/stream/forum/ForumUser.java	(revision 9bcace0a54af9c4ad5a233646b79b7086d957126)
+@@ -0,0 +1,71 @@
++package com.kodilla.stream.forum;
++
++import java.util.HashSet;
++import java.util.Set;
++import java.util.stream.Collectors;
++
++public final class ForumUser {
++    private final String username;
++    private final String realName;
++    private final String location;
++    private final Set<ForumUser> friends = new HashSet<>();
++
++    public ForumUser(final String username, final String realName,
++                     final String location) {
++        this.username = username;
++        this.realName = realName;
++        this.location = location;
++    }
++
++    public void addFriend(ForumUser user) {
++        friends.add(user);
++    }
++
++    public boolean removeFriend(ForumUser user) {
++        return friends.remove(user);
++    }
++
++    public String getUsername() {
++        return username;
++    }
++
++    public String getRealName() {
++        return realName;
++    }
++
++    public String getLocation() {
++        return location;
++    }
++
++    public Set<ForumUser> getFriends() {
++        return friends;
++    }
++
++    @Override
++    public String toString() {
++        return "ForumUser{" +
++                "username='" + username + '\'' +
++                ", realName='" + realName + '\'' +
++                ", location='" + location + '\'' +
++                '}';
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (!(o instanceof ForumUser)) return false;
++        ForumUser forumUser = (ForumUser) o;
++        return username.equals(forumUser.username);
++    }
++
++    @Override
++    public int hashCode() {
++        return username.hashCode();
++    }
++
++    public Set<String> getLocationsOfFriends() {
++        return friends.stream()
++                .map(ForumUser::getLocation)                    // [1]
++                .collect(Collectors.toSet());
++    }
++}
+\ No newline at end of file
+Index: kodilla-stream/src/test/java/com/kodilla/stream/forum/ForumUserTestSuite.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/kodilla-stream/src/test/java/com/kodilla/stream/forum/ForumUserTestSuite.java b/kodilla-stream/src/test/java/com/kodilla/stream/forum/ForumUserTestSuite.java
+new file mode 100644
+--- /dev/null	(revision 9bcace0a54af9c4ad5a233646b79b7086d957126)
++++ b/kodilla-stream/src/test/java/com/kodilla/stream/forum/ForumUserTestSuite.java	(revision 9bcace0a54af9c4ad5a233646b79b7086d957126)
+@@ -0,0 +1,55 @@
++package com.kodilla.stream.forum;
++
++import org.junit.jupiter.api.Test;
++
++import static org.junit.jupiter.api.Assertions.*;
++
++class ForumUserTestSuite {
++
++    @Test
++    void testGetLocationsOfFriends() {
++        //Given
++        //Create users
++        ForumUser user1 = new ForumUser("alan01", "Alan Kosovsky", "Washington");
++        ForumUser user2 = new ForumUser("ethanreard", "Ethan Reard", "Miami");
++        ForumUser user3 = new ForumUser("eRiK", "Erik Hull", "Key West");
++        ForumUser user4 = new ForumUser("booth", "Mya Booth", "Washington");
++        ForumUser user5 = new ForumUser("nicole1987", "Nicole Lee", "Orlando");
++        ForumUser user6 = new ForumUser("nobody", "Briana Williams", "Miami");
++        ForumUser user7 = new ForumUser("bigmac", "Robert Macdonald", "Washington");
++        ForumUser user8 = new ForumUser("thebigone", "Clay Small", "Orlando");
++        ForumUser user9 = new ForumUser("user121212", "Marisa Frank", "Washington");
++        ForumUser user10 = new ForumUser("lawyer", "Lexie John", "Miami");
++
++        //When
++        //Create relations for user1
++        user1.addFriend(user3);
++        user1.addFriend(user7);
++        user1.addFriend(user10);
++        //Create relations for user3
++        user3.addFriend(user1);
++        user3.addFriend(user7);
++        user3.addFriend(user2);
++        user3.addFriend(user9);
++        //Create relations for user7
++        user7.addFriend(user1);
++        user7.addFriend(user3);
++        //Create relations for user10
++        user10.addFriend(user1);
++        //Create relations for user2
++        user2.addFriend(user3);
++        //Create relations for user9
++        user9.addFriend(user3);
++
++        //Then
++        //user1 has 3 friends with following locations:
++        //      user3:  "Key West"
++        //      user7:  "Washington"
++        //      user10: "Miami"
++        assertEquals(3, user1.getLocationsOfFriends().size());
++        assertTrue(user1.getLocationsOfFriends().contains("Key West"));
++        assertTrue(user1.getLocationsOfFriends().contains("Washington"));
++        assertTrue(user1.getLocationsOfFriends().contains("Miami"));
++        assertFalse(user1.getLocationsOfFriends().contains("Orlando"));
++    }
++}
+\ No newline at end of file
+Index: kodilla-testing/src/main/java/com/kodilla/testing/library/BookLibrary.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/kodilla-testing/src/main/java/com/kodilla/testing/library/BookLibrary.java b/kodilla-testing/src/main/java/com/kodilla/testing/library/BookLibrary.java
+--- a/kodilla-testing/src/main/java/com/kodilla/testing/library/BookLibrary.java	(revision eb9ba697a41ba6b36993699cfcb575b6a1871449)
++++ b/kodilla-testing/src/main/java/com/kodilla/testing/library/BookLibrary.java	(revision 9bcace0a54af9c4ad5a233646b79b7086d957126)
+@@ -19,8 +19,7 @@
+         bookList = resultList;
+         return bookList;
+     }
+-
+-//    public List<Book> listBooksInHandsOf(LibraryUser libraryUser) {
+-//        List<Book> bookList = new ArrayList<>();
+-//    }
++    public List<Book> listBooksInHandsOf(LibraryUser libraryUser) {
++        return libraryDatabase.listBooksInHandsOf(libraryUser);
++    }
+ }
+\ No newline at end of file
+Index: kodilla-testing/src/test/java/com/kodilla/testing/library/BookDirectoryTestSuite.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/kodilla-testing/src/test/java/com/kodilla/testing/library/BookDirectoryTestSuite.java b/kodilla-testing/src/test/java/com/kodilla/testing/library/BookDirectoryTestSuite.java
+--- a/kodilla-testing/src/test/java/com/kodilla/testing/library/BookDirectoryTestSuite.java	(revision eb9ba697a41ba6b36993699cfcb575b6a1871449)
++++ b/kodilla-testing/src/test/java/com/kodilla/testing/library/BookDirectoryTestSuite.java	(revision 9bcace0a54af9c4ad5a233646b79b7086d957126)
+@@ -94,32 +94,61 @@
+     @Test
+     void testLibraryUserWithNoBooksBorrowed() {
+         // Given
++        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
++        LibraryUser user = new LibraryUser("Jan", "Kowal", "99010112345");
++
++        List<Book> noBooksBorrowed = new ArrayList<>();
++        when(libraryDatabaseMock.listBooksInHandsOf(user)).thenReturn(noBooksBorrowed);
+ 
+         // When
++        List<Book> booksInHand = bookLibrary.listBooksInHandsOf(user);
+ 
+         // Then
+-
++        assertEquals(0, booksInHand.size());
+     }
+ 
+     @Test
+     void testLibraryUserWithOneBookBorrowed() {
+         // Given
++        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
++        LibraryUser user = new LibraryUser("Jan", "Kowal", "99010112345");
+ 
++        List<Book> oneBookBorrowed = new ArrayList<>();
++        Book book1 = new Book("Secrets of Alamo", "John Smith", 2008);                   // [5]
++        oneBookBorrowed.add(book1);
++        when(libraryDatabaseMock.listBooksInHandsOf(user)).thenReturn(oneBookBorrowed);
+ 
+         // When
+-
++        List<Book> booksInHand = bookLibrary.listBooksInHandsOf(user);
+ 
+         // Then
+-
++        assertEquals(1, booksInHand.size());
+     }
+ 
+     @Test
+     void testLibraryUserWithFiveBooksBorrowed() {
+         // Given
++        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
++        LibraryUser user = new LibraryUser("Jan", "Kowal", "99010112345");
++
++        List<Book> fiveBooksBorrowed = new ArrayList<>();
++        Book book1 = new Book("Secrets of Alamo", "John Smith", 2008);                   // [5]
++        Book book2 = new Book("Secretaries and Directors", "Dilbert Michigan", 2012);    // [6]
++        Book book3 = new Book("Secret life of programmers", "Steve Wolkowitz", 2016);    // [7]
++        Book book4 = new Book("Secrets of Java", "Ian Tenewitch", 2010);
++        Book book5 = new Book("Secrets of Java2", "Jan Tenewitch", 2011);
++        fiveBooksBorrowed.add(book1);
++        fiveBooksBorrowed.add(book2);
++        fiveBooksBorrowed.add(book3);
++        fiveBooksBorrowed.add(book4);
++        fiveBooksBorrowed.add(book5);
++
++        when(libraryDatabaseMock.listBooksInHandsOf(user)).thenReturn(fiveBooksBorrowed);
+ 
+         // When
++        List<Book> booksInHand = bookLibrary.listBooksInHandsOf(user);
+ 
+         // Then
+-
++        assertEquals(5, booksInHand.size());
+     }
+ }
+\ No newline at end of file
