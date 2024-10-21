@@ -23,7 +23,7 @@ class SecondTestSuite {
 
         // When & Then
         assertThrows(Exception.class, () -> {
-            secondChallenge.probablyIWillThrowException(2.0, 1.0);
+            secondChallenge.probablyIWillThrowException(2.0000001, 1.0);
         });
     }
 
@@ -34,7 +34,7 @@ class SecondTestSuite {
 
         // When & Then
         assertThrows(Exception.class, () -> {
-            secondChallenge.probablyIWillThrowException(0.9, 1.0);
+            secondChallenge.probablyIWillThrowException(0.999999999, 1.0);
         });
     }
 
