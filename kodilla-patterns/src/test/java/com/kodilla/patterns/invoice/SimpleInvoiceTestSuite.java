@@ -1,4 +1,4 @@
-package com.kodilla.stream.invoice.simple;
+package com.kodilla.patterns.invoice;
 
 import org.junit.jupiter.api.Test;
 
