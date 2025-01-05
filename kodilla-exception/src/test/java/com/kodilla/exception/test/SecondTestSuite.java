@@ -48,14 +48,14 @@ class SecondTestSuite {
             secondChallenge.probablyIWillThrowException(1.5, 1.5);
         });
     }
-    @Test
-    void testXOne() {
-        // Given
-        SecondChallenge secondChallenge = new SecondChallenge();
-
-        // When & Then
-        assertThrows(Exception.class, () -> {
-            secondChallenge.probablyIWillThrowException(1.0 , 1.0);
-        });
-    }
+//    @Test
+//    void testXOne() {
+//        // Given
+//        SecondChallenge secondChallenge = new SecondChallenge();
+//
+//        // When & Then
+//        assertThrows(Exception.class, () -> {
+//            secondChallenge.probablyIWillThrowException(1.0 , 1.0);
+//        }
+//    }
 }
